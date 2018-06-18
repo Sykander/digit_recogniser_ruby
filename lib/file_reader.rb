@@ -3,16 +3,13 @@ class FileReader
 
   # Paths to the data
   TRAINING_LABELS_PATH = './resources/train-labels-idx1-ubyte.gz'
-  TRAINING_IMAGES_PATH = './resources/train-labels-idx1-ubyte.gz'
+  TRAINING_IMAGES_PATH = './resources/train-images-idx3-ubyte.gz'
 
   def initialize
 
   end
 
   def get_mnist_training_data
-    # declare columns and rows to point to the same address
-    # For using when reading images
-    rows = cols = nil
     # declare arrays to store the data in
     images = Array.new
     labels = Array.new
@@ -31,7 +28,7 @@ class FileReader
       # Row and column count
       rows_count, cols_count = f.read(8).unpack('N2')
       image_count.times do
-        images.push f.read(rows_count * cols_count)
+        images.push f.read(28 * 28)
       end
     end
     # Put the images together with the labels
@@ -46,4 +43,4 @@ class FileReader
   end
 end
 
-FileReader.new.get_mnist_training_data
+p FileReader.new.get_mnist_training_data.sample
