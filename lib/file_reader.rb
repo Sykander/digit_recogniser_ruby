@@ -5,10 +5,6 @@ class FileReader
   TRAINING_LABELS_PATH = './resources/train-labels-idx1-ubyte.gz'
   TRAINING_IMAGES_PATH = './resources/train-images-idx3-ubyte.gz'
 
-  def initialize
-
-  end
-
   def get_mnist_training_data
     # declare arrays to store the data in
     images = Array.new
@@ -42,5 +38,3 @@ class FileReader
     return data
   end
 end
-
-p FileReader.new.get_mnist_training_data.sample
