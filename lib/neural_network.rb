@@ -49,7 +49,7 @@ class NeuralNetwork
         if layer == 0
           weight[node] = Array.new(inputs)
         else
-          weight[node] = Array.new(@neural_net_model layer -1
+          weight[node] = Array.new(@neural_net_model(layer -1))
         end
         # increment the counter
         node += 1
@@ -73,23 +73,16 @@ class NeuralNetwork
   end
 
   def gen_biasses
-    # CREATE THE ARRAY
-    biasses = Array.new(@layers_count)
-    # put an array in each index of weights which has length of the inputs
-    biasses.each do |layer|
-      layer = Array.new(@inputs_count)
-    end
-    # add output layer biasses
-    biasses.push Array.new(@outputs_count)
-
-    # FILL THE ARRAY
     gen = Random.new
-    biasses.each do |bias_layer|
-      bias_layer.each do |bias|
-        bias = gen.rand(0..10)
+    
+    biasses = @neural_net
+    biasses.each do |layer|
+      layer.each do |node|
+        node.each do
+          node = gen.rand * 20 - 10
+        end
       end
     end
-    @biasses = biasses
   end
 
   def sigmoid input
