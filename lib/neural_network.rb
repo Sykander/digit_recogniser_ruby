@@ -23,14 +23,31 @@ class NeuralNetwork
   end
 
   def make_prediction inputs
-    # Multiply each input by it's weight
-    data = []
-    i = 0
-    while i < inputs.length
-      data.push inputs[i]*weights[0][i]
-      ++i
+    layer = 0
+    while layer < @neural_net.length
+      node = 0
+      while node < @neural_net[layer].length
+        if layer == 0
+          i = 0
+          input_x_weight = 0
+          while i < inputs.length
+            input_x_weight += inputs[i] * @weights[layer][node][i]
+            i += 1
+          end
+          @neural_net[layer][node] = sigmoid(input_x_weight - biasses[layer][node])
+        else
+          i = 0
+          node_x_weight = 0
+          while i < @neural_net[layer -1].length
+            node_x_weight += @neural_net[layer-1][i] * @weights[layer][node][i]
+            i += 1
+          end
+          @neural_net[layer][node] = sigmoid(node_x_weight - biasses[layer][node])
+        end
+        node += 1
+      end
+      layer += 1
     end
-
   end
 
   def gen_weights
@@ -43,13 +60,13 @@ class NeuralNetwork
     # Make an array for storing weights in
     # declare a counter for layers
     layer = 0
-    while layer< weights.length
+    while layer < weights.length
       node = 0
-      while node<weights[layer]
+      while node < weights[layer]
         if layer == 0
-          weight[node] = Array.new(inputs)
+          weights[layer][node] = Array.new(inputs)
         else
-          weight[node] = Array.new(@neural_net_model(layer -1))
+          weights[layer][node] = Array.new(@neural_net_model(layer -1))
         end
         # increment the counter
         node += 1
@@ -74,7 +91,7 @@ class NeuralNetwork
 
   def gen_biasses
     gen = Random.new
-    
+
     biasses = @neural_net
     biasses.each do |layer|
       layer.each do |node|
@@ -83,6 +100,8 @@ class NeuralNetwork
         end
       end
     end
+
+    @biasses = biasses
   end
 
   def sigmoid input
