@@ -66,7 +66,7 @@ class NeuralNetwork
         if layer == 0
           weights[layer][node] = Array.new(inputs)
         else
-          weights[layer][node] = Array.new(@neural_net_model(layer -1))
+          weights[layer][node] = Array.new( @neural_net_model[layer -1] )
         end
         # increment the counter
         node += 1

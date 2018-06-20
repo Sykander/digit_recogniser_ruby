@@ -2,8 +2,8 @@ require "zlib"
 class FileReader
 
   # Paths to the data
-  TRAINING_LABELS_PATH = '../resources/train-labels-idx1-ubyte.gz'
-  TRAINING_IMAGES_PATH = '../resources/train-images-idx3-ubyte.gz'
+  TRAINING_LABELS_PATH = './lib/resources/train-labels-idx1-ubyte.gz'
+  TRAINING_IMAGES_PATH = './lib/resources/train-images-idx3-ubyte.gz'
 
   def get_mnist_training_data
     # declare arrays to store the data in
@@ -40,7 +40,7 @@ class FileReader
   end
 
   def print_image index
-    image = @training_data[index]
+    image = @training_data[index].first
     image = image.split ''
     i=0
     while i<28
