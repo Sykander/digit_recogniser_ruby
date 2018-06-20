@@ -2,8 +2,8 @@ require "zlib"
 class FileReader
 
   # Paths to the data
-  TRAINING_LABELS_PATH = './lib/resources/train-labels-idx1-ubyte.gz'
-  TRAINING_IMAGES_PATH = './lib/resources/train-images-idx3-ubyte.gz'
+  TRAINING_LABELS_PATH = 'lib/resources/train-labels-idx1-ubyte.gz'
+  TRAINING_IMAGES_PATH = 'lib/resources/train-images-idx3-ubyte.gz'
 
   def get_mnist_training_data
     # declare arrays to store the data in
@@ -36,17 +36,32 @@ class FileReader
       [image, target]
     end
     @training_data = data
-    return data
+  end
+
+  def format_image image
+    formatted_image = []
+    image = image.split ''
+    blank = image.first
+
+    image.each do |pixel|
+      if pixel == blank
+        formatted_image.push 0
+      else
+        formatted_image.push 1
+      end
+    end
+    formatted_image
   end
 
   def print_image index
     image = @training_data[index].first
-    image = image.split ''
+    target = @training_data[index][1]
+    image = format_image image
     i=0
     while i<28
       j=0
       while j<28
-        if image[i*28 + j] == image[0]
+        if image[i*28 + j] == 0
           print '_'
         else
           print '#'
@@ -56,5 +71,13 @@ class FileReader
       puts ''
       i += 1
     end
+    puts ''
+    puts "To be a " + target.find_index(1).to_s
+    puts ''
   end
+
 end
+
+# require_relative 'lib/accessor.rb'
+# a = Accessor.get_file_reader
+# a.get_mnist_training_data.sample

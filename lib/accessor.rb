@@ -6,7 +6,7 @@ class Accessor
     FileReader.new
   end
 
-  def self.get_neural_network
-    NeuralNetwork.new
+  def self.get_neural_network(inputs, layers, outputs)
+    NeuralNetwork.new(inputs, layers, outputs)
   end
 end
