@@ -1,4 +1,4 @@
-require_relative 'lib/accessor.rb'
+require_relative './lib/accessor.rb'
 
 @file = Accessor.get_file_reader
 @file.get_mnist_training_data

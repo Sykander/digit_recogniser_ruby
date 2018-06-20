@@ -9,16 +9,16 @@ class NeuralNetwork
     @outputs_count = outputs
     # Calculate complete array of layers including output
     # Makes a model of how the neural network should be layed out
-    neural_net_model = Array.new()
-
-    neural_net_model += layers
+    neural_net_model = layers
     neural_net_model.push outputs
     @neural_net_model = neural_net_model
+
     # Make the final neural network
     @neural_net = Array.new( neural_net_model.length )
     i = 0;
-    while i< neural_net_model.lenth
+    while i< neural_net_model.length
       @neural_net[i] = Array.new(neural_net_model[i])
+      i += 1
     end
   end
 
