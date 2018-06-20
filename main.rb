@@ -10,4 +10,15 @@ data = @file.training_data.sample
 data_image = @file.format_image (data.first)
 data_target = data[1]
 
-puts @net.make_prediction data_image
+output = @net.make_prediction data_image
+
+puts 'Difference to target'
+diff = []
+i = 0
+while i < data_target.length
+  diff.push data_target[i].abs - output[i].abs
+
+  i += 1
+end
+
+puts diff
