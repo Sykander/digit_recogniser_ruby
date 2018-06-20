@@ -4,7 +4,7 @@ class NeuralNetwork
   # Make neural net information easily available
   attr_reader :neural_net, :inputs_count
 
-  def initialize(inputs, layers, outputs)
+  def model_net inputs, layers, outputs
     @inputs_count = inputs
     @outputs_count = outputs
     # Calculate complete array of layers including output
@@ -14,12 +14,13 @@ class NeuralNetwork
     @neural_net_model = neural_net_model
 
     # Make the final neural network
-    @neural_net = Array.new( neural_net_model.length )
+    neural_net = Array.new( @neural_net_model.length )
     i = 0;
-    while i< neural_net_model.length
-      @neural_net[i] = Array.new(neural_net_model[i])
+    while i< @neural_net_model.length
+      neural_net[i] = Array.new(@neural_net_model[i])
       i += 1
     end
+    @neural_net = neural_net
   end
 
   def evaluate_prediction inputs, target

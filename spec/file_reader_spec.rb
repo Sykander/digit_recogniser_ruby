@@ -1,4 +1,4 @@
-RSpec.describe "Read in and format training data" do
+RSpec.describe "File Reader" do
 
   before(:all) do
     @file = Accessor.get_file_reader
