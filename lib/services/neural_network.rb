@@ -34,7 +34,7 @@ class NeuralNetwork
             input_x_weight += inputs[i] * @weights[layer][node][i]
             i += 1
           end
-          @neural_net[layer][node] = sigmoid(input_x_weight - biasses[layer][node])
+          @neural_net[layer][node] = sigmoid(input_x_weight - @biasses[layer][node])
         else
           i = 0
           node_x_weight = 0
@@ -42,7 +42,7 @@ class NeuralNetwork
             node_x_weight += @neural_net[layer-1][i] * @weights[layer][node][i]
             i += 1
           end
-          @neural_net[layer][node] = sigmoid(node_x_weight - biasses[layer][node])
+          @neural_net[layer][node] = sigmoid(node_x_weight - @biasses[layer][node])
         end
         node += 1
       end
@@ -57,7 +57,13 @@ class NeuralNetwork
     # The third dimension should contain an array of values corresponding to
     # each node in the layer below the one being referenced
 
-    weights = @neural_net
+
+    weights = Array.new( @neural_net_model.length )
+    i = 0;
+    while i< @neural_net_model.length
+      weights[i] = Array.new(@neural_net_model[i])
+      i += 1
+    end
     # Make an array for storing weights in
     # declare a counter for layers
     layer = 0
@@ -75,7 +81,6 @@ class NeuralNetwork
       # increment the counter
       layer += 1
     end
-
     gen = Random.new
     # Fill the array
     i=0
@@ -91,22 +96,28 @@ class NeuralNetwork
       end
       i += 1
     end
-
     @weights = weights
   end
 
   def gen_biasses
     gen = Random.new
 
-    biasses = @neural_net
-    biasses.each do |layer|
-      layer.each do |node|
-        node.each do
-          node = (gen.rand-0.5) * 20
-        end
-      end
+    biasses = Array.new( @neural_net_model.length )
+    i = 0;
+    while i< @neural_net_model.length
+      biasses[i] = Array.new( @neural_net_model[i])
+      i += 1
     end
 
+    i=0
+    while i < biasses.length
+      j=0
+      while j < biasses[i].length
+        biasses[i][j] = (gen.rand-0.5) * 20
+        j += 1
+      end
+      i += 1
+    end
     @biasses = biasses
   end
 
