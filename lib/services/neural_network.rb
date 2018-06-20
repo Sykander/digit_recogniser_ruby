@@ -48,6 +48,7 @@ class NeuralNetwork
       end
       layer += 1
     end
+    @neural_net.last
   end
 
   def gen_weights
@@ -62,9 +63,9 @@ class NeuralNetwork
     layer = 0
     while layer < weights.length
       node = 0
-      while node < weights[layer]
+      while node < weights[layer].length
         if layer == 0
-          weights[layer][node] = Array.new(inputs)
+          weights[layer][node] = Array.new( @inputs_count )
         else
           weights[layer][node] = Array.new( @neural_net_model[layer -1] )
         end
@@ -77,13 +78,18 @@ class NeuralNetwork
 
     gen = Random.new
     # Fill the array
-    weights.each do |layer|
-      layer.each do |node|
-        node.each do |weight|
-          # put a random number between -10 and 10 into each weight
-          weight = gen.rand * 20 - 10
+    i=0
+    while i< weights.length
+      j=0
+      while j< weights[i].length
+        k=0
+        while k< weights[i][j].length
+          weights[i][j][k] = (gen.rand-0.5) * 20
+          k += 1
         end
+        j += 1
       end
+      i += 1
     end
 
     @weights = weights
@@ -96,7 +102,7 @@ class NeuralNetwork
     biasses.each do |layer|
       layer.each do |node|
         node.each do
-          node = gen.rand * 20 - 10
+          node = (gen.rand-0.5) * 20
         end
       end
     end

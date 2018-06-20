@@ -5,6 +5,8 @@ class FileReader
   TRAINING_LABELS_PATH = 'lib/resources/train-labels-idx1-ubyte.gz'
   TRAINING_IMAGES_PATH = 'lib/resources/train-images-idx3-ubyte.gz'
 
+  attr_reader :training_data
+
   def get_mnist_training_data
     # declare arrays to store the data in
     images = Array.new
