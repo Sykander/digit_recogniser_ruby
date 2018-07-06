@@ -11,13 +11,13 @@ RSpec.describe "File Reader" do
     end
 
     it "should return an array 60,000" do
-      expect(@file.training_data.length).to eq 60000
+      expect(@file.get_mnist_training_data.length).to eq 60000
     end
 
     it "should contain a string array pair in each entry" do
-      expect(@file.training_data.sample).to be_kind_of Array
-      expect(@file.training_data.sample[0]).to be_kind_of String
-      expect(@file.training_data.sample[1]).to be_kind_of Array
+      expect(@file.get_mnist_training_data).to all(be_kind_of Array)
+      expect(@file.get_mnist_training_data.sample[0]).to be_kind_of String
+      expect(@file.get_mnist_training_data.sample[1]).to be_kind_of Array
     end
 
     it "should contain a string of length 28^2" do

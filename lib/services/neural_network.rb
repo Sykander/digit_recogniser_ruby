@@ -2,7 +2,7 @@
 class NeuralNetwork
 
   # Make neural net information easily available
-  attr_reader :neural_net, :inputs_count
+  attr_reader :neural_net, :inputs_count, :outputs_count
 
   def model_net inputs, layers, outputs
     @inputs_count = inputs
@@ -24,7 +24,15 @@ class NeuralNetwork
   end
 
   def evaluate_prediction inputs, target
-
+    outputs = make_prediction inputs
+    # if inputs.length != outputs.length raise
+    cost = []
+    i=0
+    while i<outputs.length
+      cost.push (target[i].abs - outputs[i].abs).abs
+      i += 1
+    end
+    cost
   end
 
   def make_prediction inputs
@@ -34,7 +42,7 @@ class NeuralNetwork
       while node < @neural_net[layer].length
         if layer == 0
           i = 0
-          input_x_weight = 0
+          input_x_weight = 0.0
           while i < inputs.length
             input_x_weight += inputs[i] * @weights[layer][node][i]
             i += 1
@@ -53,6 +61,7 @@ class NeuralNetwork
       end
       layer += 1
     end
+    @neural_net
     # compute sigmoid on each of the outputs
     @neural_net.last.each do |output|
       output = sigmoid output
@@ -143,6 +152,6 @@ class NeuralNetwork
   # This network implements the sigmoid function
   # Should return a value between 0 and 1
   def sigmoid input
-    Math.exp(input) / (1 + Math.exp(input) )
+    1 / (1 + Math.exp(-input) )
   end
 end
